@@ -40,10 +40,13 @@ def main():
                 return
         screen.fill((0,0,0))
         update(dt, updatable)
+
         if flew_into_asteroid(asteroids, player1):
             print("Game over!")
             return
         
+        asteroid_shot(asteroids, shots)
+
         draw(screen, drawable)
         pygame.display.flip()
         dt = clock.tick(60) / 1000
@@ -64,5 +67,13 @@ def flew_into_asteroid(asteroids, player):
             return True
     return False
 
+def asteroid_shot(asteroids, shots):
+    for asteroid in asteroids:
+        for bullet in shots:
+            if bullet.collision(asteroid):
+                asteroid.split()
+                bullet.kill()
+
+    
 if __name__ == "__main__":
     main()
